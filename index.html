@@ -16,11 +16,9 @@
             <div v-for="(item, index) in items"  class="col-12 col-md-4 easy">
                 <div class="item p-3">
                     <div class="circle"></div>
-                    <!-- <img v-for="image in item.colors" :src="image[0].img" alt="" class="img-fluid"> -->
                     <template v-for="image in item.colors" v-show="image.checked == true">
                         <img :src="image.img" v-show="image.checked == true" alt="" class="img-fluid">
                     </template>
-                    <!-- {{item}} -->
                     <div class="content">
                         <span class="badge badge-secondary badge-pill">feminino</span>
                         <template v-for="code in item.colors" v-show="code.checked == true">
