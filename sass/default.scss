@@ -5,12 +5,14 @@ html, body, a, div, p, strong, b, input, textarea, select, option, h1, h2, h3, h
 $pcolor: #8319ad;
 $scolor: #c55af0;
 $tcolor: #862fd6;
+$ccolor: #ffbb00;
 
 html{
     body{
         background: $tcolor;
         display: flex;
         justify-content: center;
+        overflow-x: hidden;
     }
 }
 .easy{
@@ -19,24 +21,47 @@ html{
 .clickcolor{
     background: $pcolor !important;
 }
+
 .item{
     height: 100%;
     transition: all 0.5s;
     width: 100%;
     background: #eee;
     strong{
-        font-size: 1.4em;
+        font-size: 1.6em;
+        line-height: 1em;
         color: $pcolor;
-        min-height: 2.8em;
+        min-height: 2em;
         display: flex;
     }
     img{
         transition: all 0.5s;       
         max-height: 400px; 
+        position: relative;
+        z-index: 990;
+    }
+    .price{
+        line-height: 1em;
+        strong{
+            color: #000 !important;
+            display: block;
+        }
+    }
+    .circle{
+        opacity: 0;
+        transition: all 0.5s;
+        position: absolute;
+        top: 8em;
+        border-radius: 100%;
+        left: 10em;
+        width: 10px;
+        height: 10px;
+        background: $ccolor;
+        z-index: 10;
     }
     .sizes, .colors{
-        // max-width: 50% !important;
-        padding: 5px;
+        // display: none;
+        padding: 3px;
         display: inline-block;
         span{
             display: table;
@@ -46,21 +71,21 @@ html{
         button{
             font-size: 0.8em;
             border: none;
-            background: #ccc;
-            color: white;
         }
     }.content{
         transition: all 0.5s;
     }
     .sizes{
-        button{
-            &:hover{
-                background: $scolor !important;
-            }
-        }
+        min-width: 30%;
     }
     .colors{
+        min-width: 65% !important;
+        span{
+            line-height: 2.7em;
+        }
         button{
+            background: #ccc;
+            color: white;
             box-shadow: 0 0 4px #9c9c9c;
             width: 12px;
             height: 12px;
@@ -71,7 +96,7 @@ html{
     &:hover{
         border-radius: 12px 0;
         transition: all 0.5s;
-        height: 140%;
+        height: 110%;
         & > .content{
             position: relative;
             transform: translateY(3em);
@@ -81,5 +106,17 @@ html{
             transition: all 0.5s;
             transform: rotate(30deg) scale(1.3);
         }
+        & > .circle{
+            opacity: 1;
+            transition: all 0.5s;
+            transform: scale(33) translate(0.05em, -0.1em);
+        }
+    }
+
+    .badge{
+        font-weight: lighter;
+    }
+    .badge-default{
+        opacity: 0.4;
     }
 }

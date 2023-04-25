@@ -6,7 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["product", "vuejs", "ecommerce", "front-end"],
+  "keywords": [
+    "product",
+    "vuejs",
+    "ecommerce",
+    "front-end"
+  ],
   "author": "Juliano Gomes da Costa - vetorart.com.br",
   "license": "ISC",
   "devDependencies": {

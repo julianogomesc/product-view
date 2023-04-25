@@ -15,17 +15,33 @@
         <div class="row">
             <div v-for="(item, index) in items"  class="col-12 col-md-4 easy">
                 <div class="item p-3">
-                    <img src="./images/nike01.png" alt="" class="img-fluid">
+                    <div class="circle"></div>
+                    <!-- <img v-for="image in item.colors" :src="image[0].img" alt="" class="img-fluid"> -->
+                    <template v-for="image in item.colors" v-show="image.checked == true">
+                        <img :src="image.img" v-show="image.checked == true" alt="" class="img-fluid">
+                    </template>
+                    <!-- {{item}} -->
                     <div class="content">
                         <span class="badge badge-secondary badge-pill">feminino</span>
+                        <template v-for="code in item.colors" v-show="code.checked == true">
+                            <span v-show="code.checked == true" class="badge badge-default badge-pill float-right">{{code.sku}}</span>
+                        </template>
                         <strong>{{item.title}}</strong>
+                        <div class="price mt-4">
+                            <strong>{{item.price | priceMask}}</strong>
+                        </div>
                         <div class="sizes">
                             <span>tamanhos: </span> 
-                            <button class="mr-1" v-for="(size, index) in item.sizes" @click="ccolor(index)" :ref="index">{{size}}</button>
+                            <select name="sizes" v-model="item.size" class="form-control">
+                                <option v-for="size in item.sizes" >{{size}}</option>
+                            </select>
                         </div>
                         <div class="colors">
-                            <span>cores: </span> 
-                            <button class="mr-1" v-for="color in item.colors" :style="'background:' + color.value" data-toggle="tooltip" data-placement="top" :title="color.name" @click="colorSelected(index, color.value)"></button>
+                            <span>cores: </span>
+                            <button class="mr-1" v-for="(color, pos) in item.colors" :style="'background:' + color.value" data-toggle="tooltip" data-placement="top" :title="color.name" @click="chose(pos, item, index)"></button>
+                        </div>
+                        <div class="py-3">
+                            <button class="btn btn-success btn-block">Comprar</button>
                         </div>
                     </div>
                 </div>
@@ -46,23 +62,80 @@
                 items: [
                     {
                         id: 1, 
-                        sku: 1234, 
                         genero: 'feminino', 
-                        title: 'Tênis Nike Air Max Intrlk 75', 
-                        sizes: [34, 36, 38, 39, 40], 
+                        title: 'Tênis Nike Air Max Intrlk 75',
+                        size: 34, 
+                        price: 249.99,
+                        sizes: [34, 36, 38, 40], 
                         colors: [
-                            {name: "Cinza", value: "#888", img: ''},
-                            {name: "Vermelho", value: "red", img: ''},
-                            {name: "Preto", value: "#000", img: ''},
-                            {name: "Branco", value: "#fff", img: ''},
+                            {
+                                name: "Preto", 
+                                value: "#000", 
+                                img: './images/0125-01.png', 
+                                sku: 12.25, 
+                                sizes: [34, 36, 38, 40],
+                                price: 249.99,
+                                checked: true
+                            },
+                            {
+                                name: "Branco", 
+                                value: "#fff", 
+                                img: './images/0125-02.png', 
+                                sku: 12.28, 
+                                sizes: [36, 40],
+                                price: 269.90,
+                                checked: false
+                            }
                         ],
-                        color_selected: null,
+                    },
+                    {
+                        id: 1, 
+                        genero: 'feminino', 
+                        title: 'Tênis Nike Air Max Intrlk 75',
+                        price: 249.90,
+                        size: 34, 
+                        sizes: [34, 36, 38, 40], 
+                        colors: [
+                            {
+                                name: "Preto", 
+                                value: "#000", 
+                                img: './images/0125-01.png', 
+                                sku: 12.25, 
+                                sizes: [34, 36, 38, 40],
+                                price: 249.90,
+                                checked: true
+                            },
+                            {
+                                name: "Branco", 
+                                value: "#fff", 
+                                img: './images/0125-02.png', 
+                                sku: 12.28, 
+                                sizes: [36, 40],
+                                price: 249.90,
+                                checked: false
+                            }
+                        ],
                     }
                 ],
             },
             methods:{
-                colorSelected(index, item){
-                    this.items[index].color_selected = item
+                chose(pos, dados, index){
+                    for(var x = 0; x < dados.colors.length; x++){
+                        dados.colors[x].checked = false
+                    }
+                    dados.colors[pos].checked = true
+                    this.items[index].sizes = dados.colors[pos].sizes
+                    this.items[index].size = dados.colors[pos].sizes[0]
+                    this.items[index].price = dados.colors[pos].price
+                }
+            },
+            filters:{
+                priceMask: function(value){
+                    if(value != null) {
+                        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    } else {
+                        return value = ''
+                    }
                 }
             }
         })
